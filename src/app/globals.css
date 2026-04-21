@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html, body {
+  background: #f4f8ff;
+  color: #0f172a;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #eff6ff; }
+::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+
+.rack-chassis {
+  background: linear-gradient(180deg, #eff6ff 0%, #ffffff 36%, #e0f2fe 100%);
+  border: 1px solid rgba(125, 211, 252, 0.75);
+  border-radius: 22px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 24px 60px rgba(59,130,246,.12);
+  position: relative;
+  user-select: none;
+}
+
+.rack-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 36px;
+  background: linear-gradient(90deg, #dbeafe 0%, #eff6ff 45%, #bfdbfe 100%);
+  border: 1px solid rgba(147, 197, 253, 0.8);
+}
+.rack-rail-left { left: 0; border-radius: 22px 0 0 22px; }
+.rack-rail-right { right: 0; border-radius: 0 22px 22px 0; }
+.rack-rail::before, .rack-rail::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
+  border-radius: 50%;
+  margin: 8px auto;
+}
+
+.u-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,.65);
+  border-bottom: 1px solid rgba(191, 219, 254, .9);
+  height: 30px;
+  transition: background .12s ease;
+}
+.u-slot:hover { background: rgba(224, 242, 254, .9); }
+
+.u-slot-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: #64748b;
+  width: 32px;
+  text-align: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.device-block {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.device-block:hover {
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(59,130,246,.18);
+  z-index: 20;
+}
+.device-block.selected {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 5px rgba(59,130,246,.35), 0 16px 40px rgba(59,130,246,.2) !important;
+  z-index: 30;
+}
+
+.led { display: inline-block; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+
+.port-cell {
+  border-radius: 12px;
+  border: 1px solid #bfdbfe;
+  cursor: pointer;
+  transition: all .12s ease;
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: #fff;
+}
+.port-cell:hover { transform: scale(1.04); z-index: 5; }
+.port-cell.active { border-color: #34d399; background: rgba(16,185,129,.08); }
+.port-cell.inactive { border-color: #cbd5e1; background: rgba(248,250,252,.9); }
+.port-cell.error { border-color: #f87171; background: rgba(239,68,68,.08); animation: errPulse 1.5s infinite; }
+@keyframes errPulse { 0%,100% { opacity: 1; } 50% { opacity: .65; } }
+
+.field {
+  @apply w-full rounded-2xl border border-sky-100 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-sky-400 focus:outline-none focus:ring-4 focus:ring-sky-100 transition-all;
+}
+.label {
+  @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500;
+}
+.btn-blue {
+  @apply rounded-2xl bg-gradient-to-r from-blue-600 to-sky-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-sky-100 transition-all hover:translate-y-[-1px] hover:shadow-xl hover:shadow-sky-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.btn-ghost {
+  @apply rounded-2xl border border-sky-100 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 shadow-sm transition hover:bg-sky-50 hover:text-slate-900;
+}
+.btn-red {
+  @apply rounded-2xl border border-red-100 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-100;
+}
+.card {
+  @apply rounded-[28px] border border-sky-100 bg-white/90 shadow-[0_18px_45px_rgba(148,163,184,0.08)];
+}
+.modal-bg {
+  @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+  background: rgba(15, 23, 42, .38);
+  backdrop-filter: blur(6px);
+}
+.drag-ghost { opacity: .35; }
+.drag-over { background: rgba(59,130,246,.12) !important; outline: 2px dashed #3b82f6; }
