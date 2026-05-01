@@ -381,3 +381,5 @@ export const PRIORITY_META: Record<AlertPriority, { label: string; color: string
   medium: { label: 'Medium', color: '#fbbf24', dot: '#f59e0b' },
   low:    { label: 'Low', color: '#6ee7b7', dot: '#10b981' },
 };
+
+export * from './discoveryTypes';

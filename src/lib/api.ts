@@ -127,11 +127,46 @@ export const reportsApi = {
 };
 
 export const discoveryApi = {
-  list: () => api.get('/discovery'),
-  run: (data: object) => api.post('/discovery/run', data),
-  importFinding: (jobId: string, data: object) => api.post(`/discovery/${jobId}/import`, data),
-};
+  // nmap status
+  checkStatus: () =>
+    api.get('/discovery/status'),
 
+  // start scan
+  startScan: (data: object) =>
+    api.post('/discovery/scan', data),
+
+  // poll running scan
+  poll: (sessionId: string) =>
+    api.get(`/discovery/session/${sessionId}/poll`),
+
+  // full session details
+  getSessionDetails: (sessionId: string) =>
+    api.get(`/discovery/session/${sessionId}`),
+
+  // alias used by discovery results UI
+  getSession: (sessionId: string) =>
+    api.get(`/discovery/session/${sessionId}`),
+
+  // recent sessions list
+  listSessions: (params?: object) =>
+    api.get('/discovery/sessions', { params }),
+
+  // import one device
+  importDevice: (sessionId: string, data: object) =>
+    api.post(`/discovery/session/${sessionId}/import`, data),
+
+  // alias used by discovery results UI
+  importOne: (sessionId: string, data: object) =>
+    api.post(`/discovery/session/${sessionId}/import`, data),
+
+  // import multiple devices
+  importBulk: (sessionId: string, imports: object[]) =>
+    api.post(`/discovery/session/${sessionId}/import-bulk`, { imports }),
+
+  // delete session
+  deleteSession: (sessionId: string) =>
+    api.delete(`/discovery/session/${sessionId}`),
+};
 export const monitoringApi = {
   ingest: (deviceId: string, data: object) => api.post(`/monitoring/ingest/${deviceId}`, data),
   history: (deviceId: string, params?: object) => api.get(`/monitoring/history/${deviceId}`, { params }),
